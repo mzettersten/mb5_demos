@@ -103,7 +103,7 @@ function createTrials(data) {
 
   var expLength = data.length;
   var imageStart='<img src= "stimuli/images/'
-  var imageStop= '.jpg"  title = "" width="400" height="300">'
+  var imageStop= '.jpg"  title = "" width="600" height="400">'
 
 
   lwl_stimuli = []
@@ -140,6 +140,14 @@ function createTrials(data) {
   }
 
   timeline.push(lwl_trials);
+  
+  var movie = {
+    type: 'video-keyboard-response',
+	  source: "stimuli/movies/Hoehle_circles_chimes.mov",
+	  trial_duration: 500
+  }
+  timeline.push(fullscreen_exit)
+};
 
   var fullscreen_exit = {
     type: 'fullscreen',
@@ -147,6 +155,8 @@ function createTrials(data) {
   }
   timeline.push(fullscreen_exit)
 };
+
+
 
 
 var imageExt = 'stimuli/images/';

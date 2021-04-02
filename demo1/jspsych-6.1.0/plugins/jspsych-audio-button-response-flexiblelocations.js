@@ -108,7 +108,7 @@ jsPsych.plugins["audio-button-response-flexiblelocations"] = (function() {
 
   plugin.trial = function(display_element, trial) {
 
-	  if (audio_true) {
+	  if (trial.audio_true) {
 		  // setup stimulus
 	      var context = jsPsych.pluginAPI.audioContext();
 	      if(context !== null){
@@ -125,7 +125,7 @@ jsPsych.plugins["audio-button-response-flexiblelocations"] = (function() {
     // ${'html'}.css("background-image",trial.set_background) // ron
     document.body.style.backgroundImage = "url('stimuli/images/"+trial.set_background+".jpg')"
 	  
-	  if (audio_true) {
+	  if (trial.audio_true) {
     // set up end event if trial needs it
     if(trial.trial_ends_after_audio){
       if(context !== null){
@@ -208,7 +208,7 @@ jsPsych.plugins["audio-button-response-flexiblelocations"] = (function() {
     // function to end trial when it is time
     function end_trial() {
 		
-		if (audio_true) {
+		if (trial.audio_true) {
 			// stop the audio file if it is playing
 			// remove end event listeners if they exist
 			if(context !== null){
@@ -242,7 +242,7 @@ jsPsych.plugins["audio-button-response-flexiblelocations"] = (function() {
 		// start time
     var start_time = Date.now();
 
-	if (audio_true) {
+	if (trial.audio_true) {
 			// start audio
 	    if(context !== null){
 	      startTime = context.currentTime;

@@ -105,9 +105,13 @@ function createTrials(data) {
   var expLength = data.length;
   var imageStart='<img src= "stimuli/images/'
   var imageStop= '.jpg"  title = "" width="600" height="400">'
-
-
-  lwl_stimuli = []
+  
+  var movie = {
+    type: 'video-keyboard-response',
+	  sources: "stimuli/movies/sample_video.mp4",
+	  trial_duration: 1000
+  }
+  timeline.push(movie);
 
   for (var i = 0; i < expLength; i++) {
   

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Basic LWL</title>
+  <title>MB5 Demo1</title>
   <meta charset="utf-8"/>
   <script src="jspsych-6.1.0/jspsych.js"> </script>
   <script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
@@ -145,7 +145,8 @@ function createTrials(data) {
 	  var movie = {
 	    type: 'video-keyboard-response',
 		  sources: "stimuli/movies/sample_video.mp4",
-		  trial_duration: 10000
+		  trial_duration: 10000,
+		  autoplay: true,
 	  }
 	  timeline.push(movie);
   }

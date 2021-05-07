@@ -75,11 +75,11 @@ Papa.parse(publicSpreadsheetUrl, {
 
 //window.addEventListener('DOMContentLoaded', init)
 
-//document.body.style.backgroundColor = "black";
+document.body.style.backgroundColor = "black";
 // document.body.style.backgroundImage = "url('stimuli/images/black-background.jpg')";
-//document.body.style.backgroundSize = "100%";
-//document.body.style.backgroundPosition = "top";
-//document.body.style.backgroundRepeat = "no-repeat";
+document.body.style.backgroundSize = "100%";
+document.body.style.backgroundPosition = "top";
+document.body.style.backgroundRepeat = "no-repeat";
 
 
 var timeline = []
@@ -123,7 +123,7 @@ function createTrials(data) {
     margin_right: ['89px','0px'],
     stimulus: "",
 	  choices:[imageStart+data[i]['left_image']+imageStop, imageStart+data[i]['right_image']+imageStop],
-	  //set_background:data[i]['background'],
+	  set_background:data[i]['background'],
 	  trial_duration: data[i]['trial_time'],
 	  response_possible: false,
     data: jsPsych.timelineVariable('data'),
@@ -142,8 +142,8 @@ function createTrials(data) {
   if (data[i]['trial_type']=="familiarization") {
 	  var movie = {
 	    type: 'video-keyboard-response',
-		  sources: ["stimuli/movies/sample_video.mp4"],
-		  trial_duration: 10000,
+		  sources: ["stimuli/movies/Hoehle_circles_chimes.mov"],
+		  trial_duration: 1000,
 		  autoplay: true,
 	  }
 	  timeline.push(movie);

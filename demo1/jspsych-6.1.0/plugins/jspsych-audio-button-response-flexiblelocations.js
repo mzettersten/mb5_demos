@@ -123,7 +123,7 @@ jsPsych.plugins["audio-button-response-flexiblelocations"] = (function() {
 
     // set background image
     // ${'html'}.css("background-image",trial.set_background) // ron
-    //document.body.style.backgroundImage = "url('stimuli/images/"+trial.set_background+".jpg')"
+    document.body.style.backgroundImage = "url('stimuli/images/"+trial.set_background+".jpg')"
 	  
 	  if (trial.audio_true) {
     // set up end event if trial needs it

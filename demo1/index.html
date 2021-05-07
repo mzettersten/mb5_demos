@@ -108,7 +108,7 @@ function createTrials(data) {
   
   var movie = {
     type: 'video-keyboard-response',
-	  sources: "stimuli/movies/sample_video.mp4",
+	  sources: ["stimuli/movies/sample_video.mp4"],
 	  trial_duration: 1000
   }
   timeline.push(movie);
@@ -142,7 +142,7 @@ function createTrials(data) {
   if (data[i]['trial_type']=="familiarization") {
 	  var movie = {
 	    type: 'video-keyboard-response',
-		  sources: ["ag.mp4"],
+		  sources: ["stimuli/movies/sample_video.mp4"],
 		  trial_duration: 1000,
 		  autoplay: true,
 	  }

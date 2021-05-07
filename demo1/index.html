@@ -9,7 +9,7 @@
   <script src="jspsych-6.1.0/plugins/jspsych-image-keyboard-response.js"></script>
   <script src="jspsych-6.1.0/plugins/jspsych-fullscreen.js"></script>
   <script src="jspsych-6.1.0/plugins/jspsych-audio-button-response-flexiblelocations.js"></script>
-  <script src="jspsych-6.1.0/plugins/jspsych-video-keyboard-response.js"></script>
+  <script src="jspsych-6.1.0/plugins/jspsych-video-keyboard-responsewe.js"></script>
   <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script> -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.1.0/papaparse.min.js"></script>
   <link rel="stylesheet" href="jspsych-6.1.0/css/jspsych.css",type="text/css"> </link>
@@ -110,20 +110,8 @@ function createTrials(data) {
   lwl_stimuli = []
 
   for (var i = 0; i < expLength; i++) {
-    lwl_stimuli.push(
-    {
-		stimulus: "",
-		choices:[imageStart+data[i]['left_image']+imageStop, imageStart+data[i]['right_image']+imageStop],
-    set_background:data[i]['background'],
-		trial_duration: data[i]['trial_time'],
-    data:{
-		trial_type: data[i]['trial_type'],
-    }
-  })
-}
-
-
-  var lwl_trials = {
+  
+  var trial = {
     type: 'audio-button-response-flexiblelocations',
     margin_top: ['300px','300px'],
     margin_bottom: ['0px','0px'],
@@ -131,23 +119,33 @@ function createTrials(data) {
     margin_right: ['89px','0px'],
     // set_background: 'face-closed',
     // set_background:data.background,
-    timeline: lwl_stimuli,
+    stimulus: "",
+	  choices:[imageStart+data[i]['left_image']+imageStop, imageStart+data[i]['right_image']+imageStop],
+	  set_background:data[i]['background'],
+	  trial_duration: data[i]['trial_time'],
 	  response_possible: false,
     data: jsPsych.timelineVariable('data'),
 	  response_ends_trial: false,
+      data:{
+  		trial_type: data[i]['trial_type'],
+      }
     on_finish: function(data) {
       data.correct = data.button_pressed == data.correct_response;
     }
   }
-
-  timeline.push(lwl_trials);
   
-  var movie = {
-    type: 'video-keyboard-response',
-	  source: "stimuli/movies/Hoehle_circles_chimes.mov",
-	  trial_duration: 500
+
+  timeline.push(trial);
+  
+  if (data[i]['trial_type']=="familiarization") {
+	  var movie = {
+	    type: 'video-keyboard-response',
+		  sources: "stimuli/movies/Hoehle_circles_chimes.mov",
+		  trial_duration: 1000
+	  }
+	  timeline.push(movie);
   }
-  timeline.push(movie)
+}
 
   var fullscreen_exit = {
     type: 'fullscreen',

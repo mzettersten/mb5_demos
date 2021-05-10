@@ -76,7 +76,7 @@ Papa.parse(publicSpreadsheetUrl, {
 
 //window.addEventListener('DOMContentLoaded', init)
 
-document.body.style.backgroundColor = "black";
+document.body.style.backgroundColor = "grey";
 // document.body.style.backgroundImage = "url('stimuli/images/black-background.jpg')";
 document.body.style.backgroundSize = "100%";
 document.body.style.backgroundPosition = "top";
@@ -105,7 +105,7 @@ function createTrials(data) {
   
   var pre_trial = {
     type: 'html-button-response',
-    stimulus: '<div style="max-width:600px;"><p>Some browsers now require that a user interacts with a web page before video or audio content will autoplay. Clicking the button below satisfies that requirement.</p><p>Without this trial, the video will load but not play.</p></div>',
+    stimulus: '<div style="max-width:600px;"><p>This demo will show a series of trial examples for MB5.</p><p>Without this trial, the video will load but not play.</p></div>',
     choices: ['continue']
   }
   
@@ -120,31 +120,47 @@ function createTrials(data) {
     type: 'video-keyboard-response',
 	  sources: ["stimuli/movies/sample_video.mp4"],
 	  trial_duration: 1000,
+	  width: 320,
+	  height: 180,
 	  autoplay: true
   }
   timeline.push(movie);
 
   for (var i = 0; i < expLength; i++) {
   
+  // var trial = {
+  //   type: 'audio-button-response-flexiblelocations',
+  //   margin_top: ['300px','300px'],
+  //   margin_bottom: ['0px','0px'],
+  //   margin_left: ['0px','200px'],
+  //   margin_right: ['89px','0px'],
+  //   stimulus: "",
+  // 	  choices:[imageStart+data[i]['left_image']+imageStop, imageStart+data[i]['right_image']+imageStop],
+  // 	  set_background:data[i]['background'],
+  // 	  trial_duration: data[i]['trial_time'],
+  // 	  response_possible: false,
+  //   data: jsPsych.timelineVariable('data'),
+  // 	  response_ends_trial: false,
+  //     data:{
+  // 		trial_type: data[i]['trial_type'],
+  //     },
+  //   on_finish: function(data) {
+  //     data.correct = data.button_pressed == data.correct_response;
+  //   }
+  // }
+  
   var trial = {
-    type: 'audio-button-response-flexiblelocations',
-    margin_top: ['300px','300px'],
-    margin_bottom: ['0px','0px'],
-    margin_left: ['0px','200px'],
-    margin_right: ['89px','0px'],
+    type: 'html-button-response'
     stimulus: "",
-	  choices:[imageStart+data[i]['left_image']+imageStop, imageStart+data[i]['right_image']+imageStop],
-	  set_background:data[i]['background'],
-	  trial_duration: data[i]['trial_time'],
-	  response_possible: false,
+	choices:[imageStart+data[i]['left_image']+imageStop, imageStart+data[i]['right_image']+imageStop],
+	trial_duration: data[i]['trial_time'],
+	margin_horiizontal: '50px',
+	response_ends_trial: false
     data: jsPsych.timelineVariable('data'),
 	  response_ends_trial: false,
       data:{
   		trial_type: data[i]['trial_type'],
-      },
-    on_finish: function(data) {
-      data.correct = data.button_pressed == data.correct_response;
-    }
+      }
   }
   
 
@@ -156,6 +172,8 @@ function createTrials(data) {
 		  sources: ["stimuli/movies/ag.mp4"],
 		  trial_duration: 1000,
 		  autoplay: true,
+		  width: 320,
+		  height: 180,
 	  }
 	  timeline.push(movie);
   }

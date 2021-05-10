@@ -76,7 +76,7 @@ Papa.parse(publicSpreadsheetUrl, {
 
 //window.addEventListener('DOMContentLoaded', init)
 
-document.body.style.backgroundColor = "grey";
+document.body.style.backgroundColor = "black";
 // document.body.style.backgroundImage = "url('stimuli/images/black-background.jpg')";
 document.body.style.backgroundSize = "100%";
 document.body.style.backgroundPosition = "top";
@@ -105,7 +105,7 @@ function createTrials(data) {
   
   var pre_trial = {
     type: 'html-button-response',
-    stimulus: '<div style="max-width:600px;"><p>This demo will show a series of trial examples for MB5.</p><p>Without this trial, the video will load but not play.</p></div>',
+    stimulus: '<div style="max-width:600px;"><p>This demo will show a series of trial examples for ManyBabies5.</p><p>Each trial will begin with a short description of the trial. Each trial will have the same structure: a familiarization period (of varying length), followed by an attention getter, and a subsequent test trial pairing a novel stimulus and the familiarized stimulus.</p><p>Click continue to begin.</p></div>',
     choices: ['continue']
   }
   
@@ -116,15 +116,7 @@ function createTrials(data) {
   var imageStart='<img src= "stimuli/images/'
   var imageStop= '.jpg"  title = "" width="600" height="400">'
   
-  var movie = {
-    type: 'video-keyboard-response',
-	  sources: ["stimuli/movies/sample_video.mp4"],
-	  trial_duration: 1000,
-	  width: 320,
-	  height: 180,
-	  autoplay: true
-  }
-  timeline.push(movie);
+  
 
   for (var i = 0; i < expLength; i++) {
   
@@ -149,12 +141,52 @@ function createTrials(data) {
   //   }
   // }
   
+  if (data[i]['trial_type']=="familiarization") {
+	  
+	  if (data[i]['trial_time']==2000) {
+		  var trial_expl = {
+		    type: 'html-button-response',
+		    stimulus: '<div style="max-width:600px;"><p>This trial will show a short familiarization period (2000 ms).</p></div>',
+		    choices: ['continue']
+		  }
+		  timeline.push(trial_expl);
+	  } else if (data[i]['trial_time']==5000) {
+		  var trial_expl = {
+		    type: 'html-button-response',
+		    stimulus: '<div style="max-width:600px;"><p>This trial will show a medium-length familiarization period (5000 ms).</p></div>',
+		    choices: ['continue']
+		  }
+		  timeline.push(trial_expl);
+	  } else if (data[i]['trial_time']==10000) {
+		  var trial_expl = {
+		    type: 'html-button-response',
+		    stimulus: '<div style="max-width:600px;"><p>This trial will show a longer familiarization period (10000 ms).</p></div>',
+		    choices: ['continue']
+		  }
+		  timeline.push(trial_expl);
+	  }  
+	  
+  }
+	  
+  
+  if (data[i]['trial_type']=="familiarization") {
+  var movie = {
+    type: 'video-keyboard-response',
+	  sources: ["stimuli/movies/laughing_baby.mp4"],
+	  trial_duration: 2500,
+	  width: 320,
+	  height: 180,
+	  autoplay: true
+  }
+  timeline.push(movie);
+}
+  
   var trial = {
     type: 'html-button-response',
     stimulus: "",
 	choices:[imageStart+data[i]['left_image']+imageStop, imageStart+data[i]['right_image']+imageStop],
 	trial_duration: data[i]['trial_time'],
-	margin_horiizontal: '50px',
+	margin_horizontal: '125px',
 	response_ends_trial: false,
     data: jsPsych.timelineVariable('data'),
 	  response_ends_trial: false,
@@ -170,7 +202,7 @@ function createTrials(data) {
 	  var movie = {
 	    type: 'video-keyboard-response',
 		  sources: ["stimuli/movies/ag.mp4"],
-		  trial_duration: 1000,
+		  trial_duration: 1500,
 		  autoplay: true,
 		  width: 320,
 		  height: 180,
@@ -179,11 +211,21 @@ function createTrials(data) {
   }
 }
 
-  var fullscreen_exit = {
-    type: 'fullscreen',
-    fullscreen_mode: false
-  }
-  timeline.push(fullscreen_exit)
+var end_trial = {
+  type: 'html-button-response',
+  stimulus: '<div style="max-width:600px;"><p>You have reached the end of the demo!</p><p>Click next to finish.</p></div>',
+  choices: ['next']
+}
+
+timeline.push(end_trial);
+
+var fullscreen_exit = {
+  type: 'fullscreen',
+  fullscreen_mode: false
+}
+timeline.push(fullscreen_exit);
+
+
 };
 
 

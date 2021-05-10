@@ -114,7 +114,7 @@ function createTrials(data) {
 
   var expLength = data.length;
   var imageStart='<img src= "stimuli/images/'
-  var imageStop= '.jpg"  title = "" width="600" height="400">'
+  var imageStop= '.jpg"  title = "" width="400" height="300">'
   
   
 
@@ -186,7 +186,7 @@ function createTrials(data) {
     stimulus: "",
 	choices:[imageStart+data[i]['left_image']+imageStop, imageStart+data[i]['right_image']+imageStop],
 	trial_duration: data[i]['trial_time'],
-	margin_horizontal: '125px',
+	margin_horizontal: '100px',
 	response_ends_trial: false,
     data: jsPsych.timelineVariable('data'),
 	  response_ends_trial: false,

@@ -101,6 +101,15 @@ function createTrials(data) {
   }
 
   timeline.push(welcome);
+  
+  var pre_trial = {
+    type: 'html-button-response',
+    stimulus: '<div style="max-width:600px;"><p>Some browsers now require that a user interacts with a web page before video or audio content will autoplay. Clicking the button below satisfies that requirement.</p><p>Without this trial, the video will load but not play.</p></div>',
+    choices: ['continue']
+  }
+  
+  timeline.push(pre_trial);
+  
 
   var expLength = data.length;
   var imageStart='<img src= "stimuli/images/'

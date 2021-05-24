@@ -11,6 +11,7 @@
   <script src="jspsych-6.1.0/plugins/jspsych-audio-button-response-flexiblelocations.js"></script>
   <script src="jspsych-6.1.0/plugins/jspsych-video-keyboard-response.js"></script>
   <script src="jspsych-6.1.0/plugins/jspsych-html-button-response.js"></script>
+  <script src="jspsych-6.1.0/plugins/jspsych-html-button-response-flexiblelocations.js"></script>
   <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script> -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.1.0/papaparse.min.js"></script>
   <link rel="stylesheet" href="jspsych-6.1.0/css/jspsych.css",type="text/css"> </link>
@@ -182,11 +183,12 @@ function createTrials(data) {
 }
   
   var trial = {
-    type: 'html-button-response',
+    type: 'html-button-response-flexiblelocations',
     stimulus: "",
 	choices:[imageStart+data[i]['left_image']+imageStop, imageStart+data[i]['right_image']+imageStop],
 	trial_duration: data[i]['trial_time'],
-	margin_horizontal: '100px',
+	margin_left: ['0px','100 px'],
+	  margin_right: ['100px','0px'],
 	response_ends_trial: false,
     data: jsPsych.timelineVariable('data'),
 	  response_ends_trial: false,

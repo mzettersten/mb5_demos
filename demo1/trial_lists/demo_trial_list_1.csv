@@ -1,5 +1,5 @@
 block,trial_number,trial_type,left_image,right_image,trial_name,trial_time,background
-1,1,familiarization,Fa1_1111,Fa1_1111,short familiarization (2s),2000,black-background
+1,1,familiarization,Fa1_1111,Fa1_1111,short familiarization (2s),120000,black-background
 1,2,test,Fa1_1111,Fb1_1111,,12000,black-background
 1,3,familiarization,Fb2_2221,Fb2_2221,medium familiarization (5s),5000,black-background
 1,4,test,Fa2_3333,Fb2_2221,,12000,black-background

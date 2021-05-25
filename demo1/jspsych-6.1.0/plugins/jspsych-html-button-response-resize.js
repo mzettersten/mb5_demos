@@ -8,12 +8,12 @@
  *
  **/
 
-jsPsych.plugins["html-button-response-flexiblelocations"] = (function() {
+jsPsych.plugins["html-button-response-resize"] = (function() {
 
   var plugin = {};
 
   plugin.info = {
-    name: 'html-button-response-flexiblelocations',
+    name: 'html-button-response-resize',
     description: '',
     parameters: {
       stimulus: {
@@ -63,32 +63,8 @@ jsPsych.plugins["html-button-response-flexiblelocations"] = (function() {
       margin_horizontal: {
         type: jsPsych.plugins.parameterType.STRING,
         pretty_name: 'Margin horizontal',
-        default: '8px',
+        default: '0px',
         description: 'The horizontal margin of the button.'
-      },
-      margin_top: {
-        type: jsPsych.plugins.parameterType.STRING,
-        pretty_name: 'Margin top',
-        default: '0px',
-        description: 'Top margin of button.'
-      },
-      margin_bottom: {
-        type: jsPsych.plugins.parameterType.STRING,
-        pretty_name: 'Margin bottom',
-        default: '8px',
-        description: 'Bottom margin of button.'
-      },
-      margin_right: {
-        type: jsPsych.plugins.parameterType.STRING,
-        pretty_name: 'Margin right',
-        default: '0px',
-        description: 'Right margin of button.'
-      },
-      margin_left: {
-        type: jsPsych.plugins.parameterType.STRING,
-        pretty_name: 'Margin left',
-        default: '0px',
-        description: 'Left margin of button.'
       },
       response_ends_trial: {
         type: jsPsych.plugins.parameterType.BOOL,
@@ -117,10 +93,11 @@ jsPsych.plugins["html-button-response-flexiblelocations"] = (function() {
         buttons.push(trial.button_html);
       }
     }
-    html += '<div id="jspsych-html-button-response-btngroup">';
+    html += '<div id="jspsych-html-button-response-btngroup" style="width: 1200px; max-width: 100%;">';
     for (var i = 0; i < trial.choices.length; i++) {
       var str = buttons[i].replace(/%choice%/g, trial.choices[i]);
-      html += '<div class="jspsych-html-button-response-button" style="display: inline-block; margin-top:'+ trial.margin_top[i]+'; margin-bottom:'+ trial.margin_bottom[i]+'; margin-right:'+ trial.margin_right[i]+';margin-left:' + trial.margin_left[i]+'; '+'" id="jspsych-html-button-response-button-' + i +'" data-choice="'+i+'">'+str+'</div>';
+      html += '<div class="jspsych-html-button-response-button" style="display: inline-block; width: 40%; height: auto; margin:'+trial.margin_vertical+' '+trial.margin_horizontal+'" id="jspsych-html-button-response-button-' + i +'" data-choice="'+i+'">'+str+'</div>';
+	  html += '<span style="display: inline-block; width: 20%; opacity:0;"></span>'
     }
     html += '</div>';
 

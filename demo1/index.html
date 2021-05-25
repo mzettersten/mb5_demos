@@ -11,9 +11,10 @@
   <script src="jspsych-6.1.0/plugins/jspsych-audio-button-response-flexiblelocations.js"></script>
   <script src="jspsych-6.1.0/plugins/jspsych-video-keyboard-response.js"></script>
   <script src="jspsych-6.1.0/plugins/jspsych-html-button-response.js"></script>
-  <script src="jspsych-6.1.0/plugins/jspsych-html-button-response-flexiblelocations.js"></script>
+  <script src="jspsych-6.1.0/plugins/jspsych-html-button-response-resize.js"></script>
   <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script> -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.1.0/papaparse.min.js"></script>
+  <link rel="stylesheet" href="jspsych-6.1.0/css/mb5.css",type="text/css"> </link>
   <link rel="stylesheet" href="jspsych-6.1.0/css/jspsych.css",type="text/css"> </link>
   <link href="css/jspsych.css" rel="stylesheet" type="text/css"></link>
 </head>
@@ -114,8 +115,8 @@ function createTrials(data) {
   
 
   var expLength = data.length;
-  var imageStart='<img src= "stimuli/images/'
-  var imageStop= '.jpg"  title = "" width="400" height="300">'
+  var imageStart='<img style="max-width:100%;" src= "stimuli/images/'
+  var imageStop= '.jpg"  title = "" width="380">'
   
   
 
@@ -183,12 +184,12 @@ function createTrials(data) {
 }
   
   var trial = {
-    type: 'html-button-response-flexiblelocations',
+    type: 'html-button-response-resize',
     stimulus: "",
 	choices:[imageStart+data[i]['left_image']+imageStop, imageStart+data[i]['right_image']+imageStop],
 	trial_duration: data[i]['trial_time'],
 	margin_left: ['0px','100 px'],
-	  margin_right: ['100px','0px'],
+	  margin_right: ['200px','0px'],
 	response_ends_trial: false,
     data: jsPsych.timelineVariable('data'),
 	  response_ends_trial: false,

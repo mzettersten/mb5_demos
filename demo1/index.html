@@ -190,12 +190,9 @@ function createTrials(data) {
   timeline.push(movie);
   
   var trial = {
-    type: 'html-button-response-resize',
-    stimulus: "",
-	choices:[imageStart+data[i]['left_image']+imageStop],
+    type: 'image-keyboard-response',
+    stimulus: imageStart+data[i]['left_image']+imageStop,
 	trial_duration: data[i]['trial_time'],
-	margin_left: ['0px','0 px'],
-	  margin_right: ['0 px','0px'],
 	response_ends_trial: false,
     data: jsPsych.timelineVariable('data'),
 	  response_ends_trial: false,

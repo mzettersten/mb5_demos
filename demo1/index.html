@@ -107,7 +107,7 @@ function createTrials(data) {
   
   var pre_trial = {
     type: 'html-button-response',
-    stimulus: '<div style="max-width:600px;"><p>This demo will show a series of trial examples for ManyBabies5.</p><p>Each trial will begin with a short description of the trial. Each trial will have the same structure: a familiarization period (of varying length), followed by an attention getter, and a subsequent test trial pairing a novel stimulus and the familiarized stimulus.</p><p>Click continue to begin.</p></div>',
+    stimulus: '<div style="max-width:600px;"><p>This demo will show a series of trial examples for ManyBabies5.</p><p>Each trial will begin with a short description of the trial. Each trial will have the same structure: a familiarization period (of varying length), followed by an attention getter, and a subsequent test trial pairing a novel stimulus and the familiarized stimulus (currently 10s duration). Complexity is currently not varied.</p><p>Click continue to begin.</p></div>',
     choices: ['continue']
   }
   
@@ -166,7 +166,14 @@ function createTrials(data) {
 		    choices: ['continue']
 		  }
 		  timeline.push(trial_expl);
-	  }  
+	  }  else if (data[i]['trial_time']==20000) {
+		  var trial_expl = {
+		    type: 'html-button-response',
+		    stimulus: '<div style="max-width:600px;"><p>This trial will show a very long familiarization period (20000 ms).</p></div>',
+		    choices: ['continue']
+		  }
+		  timeline.push(trial_expl);
+	  } 
 	  
   }
 	  
@@ -181,12 +188,11 @@ function createTrials(data) {
 	  autoplay: true
   }
   timeline.push(movie);
-}
   
   var trial = {
     type: 'html-button-response-resize',
     stimulus: "",
-	choices:[imageStart+data[i]['left_image']+imageStop, imageStart+data[i]['right_image']+imageStop],
+	choices:[imageStart+data[i]['left_image']+imageStop],
 	trial_duration: data[i]['trial_time'],
 	margin_left: ['0px','100 px'],
 	  margin_right: ['200px','0px'],
@@ -200,6 +206,29 @@ function createTrials(data) {
   
 
   timeline.push(trial);
+} else {
+	
+    var trial = {
+      type: 'html-button-response-resize',
+      stimulus: "",
+  	choices:[imageStart+data[i]['left_image']+imageStop, imageStart+data[i]['right_image']+imageStop],
+  	trial_duration: data[i]['trial_time'],
+  	margin_left: ['0px','100 px'],
+  	  margin_right: ['200px','0px'],
+  	response_ends_trial: false,
+      data: jsPsych.timelineVariable('data'),
+  	  response_ends_trial: false,
+        data:{
+    		trial_type: data[i]['trial_type'],
+        }
+    }
+  
+
+    timeline.push(trial);
+	
+}
+  
+  
   
   if (data[i]['trial_type']=="familiarization") {
 	  var movie = {

@@ -191,7 +191,7 @@ function createTrials(data) {
   
   var trial = {
     type: 'image-keyboard-response',
-    stimulus: imageStart+data[i]['left_image']+imageStop,
+    stimulus: "stimuli/images/"+data[i]['left_image']+".jpg",
 	trial_duration: data[i]['trial_time'],
 	response_ends_trial: false,
     data: jsPsych.timelineVariable('data'),

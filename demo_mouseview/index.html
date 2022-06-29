@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>MB5 Demo2</title>
+  <meta charset="utf-8"/>
+  <script src="jspsych-6.1.0/jspsych.js"> </script>
+  <script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
+  <script src="jspsych-6.1.0/plugins/jspsych-image-keyboard-response.js"></script>
+  <script src="jspsych-6.1.0/plugins/jspsych-fullscreen.js"></script>
+  <script src="jspsych-6.1.0/plugins/jspsych-audio-button-response-flexiblelocations.js"></script>
+  <script src="jspsych-6.1.0/plugins/jspsych-video-keyboard-response.js"></script>
+  <script src="jspsych-6.1.0/plugins/jspsych-html-button-response.js"></script>
+  <script src="jspsych-6.1.0/plugins/jspsych-html-button-response-resize.js"></script>
+  <script src="jspsych-mouseview-start.js"></script>
+  <script src="jspsych-mouseview-stop.js"></script>
+  <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script> -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.1.0/papaparse.min.js"></script>
+  <link rel="stylesheet" href="css/mb5.css",type="text/css"> </link>
+  <link rel="stylesheet" href="jspsych-6.1.0/css/jspsych.css",type="text/css"> </link>
+  <link href="css/jspsych.css" rel="stylesheet" type="text/css"></link>
+</head>
+<body>
+  <div id="jspsych-lwl"></div>
+</body>
+
+<script>
+
+
+//Enter subject id
+var subject_id = "test";
+
+var publicSpreadsheetUrl =
+'https://mzettersten.github.io/mb5_demos/demo_mouseview/trial_lists/demo_trial_list_1.csv'
+	
+
+Papa.parse(publicSpreadsheetUrl, {
+	          download: true,
+	          header: true,
+		dynamicTyping: true,
+	          complete: function(results) {
+	            var data = results.data
+	            console.log(data)
+				startExperiment(data);
+	          }
+	        })
+
+
+document.body.style.backgroundColor = "black";
+document.body.style.backgroundSize = "100%";
+document.body.style.backgroundPosition = "top";
+document.body.style.backgroundRepeat = "no-repeat";
+
+
+var timeline = []
+
+  var mouseview_trial_start = ()=> {     
+    mouseview.logEvent('Trial Started')
+  }
+  var mouseview_trial_end = ()=> {
+    mouseview.logEvent('Trial Ended')
+ }
+
+//function createTrials(data, tabletop) {
+function createTrials(data) {
+  console.log(data);
+
+
+  // var welcome = {
+  //   type: "fullscreen",
+  //   message: "",
+  //   button_label: "Start",
+  //   delay_after: 250
+  // }
+
+  // timeline.push(welcome);
+  
+  var pre_trial = {
+    type: 'html-button-response',
+    stimulus: '<div style="max-width:600px;"><p>This demo will show a series of trial examples for ManyBabies5.</p><p>Each trial will begin with a short description of the trial. Each trial will have the same structure: a familiarization period (of varying length), followed by an attention getter, and a subsequent test trial pairing a novel stimulus and the familiarized stimulus (currently 10s duration). Complexity is currently not varied. <b>During the test phase, the two images will be hidden from view and you will move your mouse to "uncover" them</b>.</p><p>Click continue to begin.</p></div>',
+    choices: ['continue']
+  }
+  
+  timeline.push(pre_trial);
+  
+
+  var expLength = data.length;
+  var imageStart='<img style="max-width:100%;" src= "stimuli/images/'
+  var imageStop= '.jpg"  title = "" width="380">'
+  
+  
+
+  for (var i = 0; i < expLength; i++) {
+
+  
+  if (data[i]['trial_type']=="familiarization") {
+	  
+	  if (data[i]['trial_time']==2000) {
+		  var trial_expl = {
+		    type: 'html-button-response',
+		    stimulus: '<div style="max-width:600px;"><p>This trial will show a short familiarization period (2000 ms).</p></div>',
+		    choices: ['continue']
+		  }
+		  timeline.push(trial_expl);
+	  } else if (data[i]['trial_time']==5000) {
+		  var trial_expl = {
+		    type: 'html-button-response',
+		    stimulus: '<div style="max-width:600px;"><p>This trial will show a medium-length familiarization period (5000 ms).</p></div>',
+		    choices: ['continue']
+		  }
+		  timeline.push(trial_expl);
+	  } else if (data[i]['trial_time']==10000) {
+		  var trial_expl = {
+		    type: 'html-button-response',
+		    stimulus: '<div style="max-width:600px;"><p>This trial will show a longer familiarization period (10000 ms).</p></div>',
+		    choices: ['continue']
+		  }
+		  timeline.push(trial_expl);
+	  }  else if (data[i]['trial_time']==20000) {
+		  var trial_expl = {
+		    type: 'html-button-response',
+		    stimulus: '<div style="max-width:600px;"><p>This trial will show a very long familiarization period (20000 ms).</p></div>',
+		    choices: ['continue']
+		  }
+		  timeline.push(trial_expl);
+	  } 
+	  
+  }
+	  
+  
+  if (data[i]['trial_type']=="familiarization") {
+  var movie = {
+    type: 'video-keyboard-response',
+	  sources: ["stimuli/movies/laughing_baby.mp4"],
+	  trial_duration: 2500,
+	  width: 320,
+	  height: 180,
+	  autoplay: true
+  }
+  //timeline.push(movie);
+  
+  var trial = {
+    type: 'html-button-response-resize',
+    stimulus: imageStart+data[i]['right_image']+imageStop,
+	  choices:[],
+	trial_duration: data[i]['trial_time'],
+	response_ends_trial: false,
+    data: jsPsych.timelineVariable('data'),
+	  response_ends_trial: false,
+      data:{
+  		trial_type: data[i]['trial_type'],
+      }
+  }
+  
+
+  timeline.push(trial);
+} else {
+
+  timeline.push({
+      type: 'Mouseview-Start',
+      aperture_size: "25%",
+      overlay_alpha: 1
+  }) 
+	
+    var trial = {
+      type: 'html-button-response-resize',
+
+    prompt: "Move your mouse to view the images on the left and right of the screen.",
+      stimulus: "",
+  	choices:[imageStart+data[i]['left_image']+imageStop, imageStart+data[i]['right_image']+imageStop],
+  	trial_duration: data[i]['trial_time'],
+  	margin_left: ['0px','100 px'],
+  	  margin_right: ['200px','0px'],
+  	response_ends_trial: false,
+      data: jsPsych.timelineVariable('data'),
+  	  response_ends_trial: false,
+        data:{
+    		trial_type: data[i]['trial_type'],
+        },
+    on_start: mouseview_trial_start,
+    on_end: mouseview_trial_end
+    }
+  
+
+    timeline.push(trial);
+
+    timeline.push({
+      type: 'Mouseview-Stop'
+  })
+	
+}
+  
+  
+  
+  if (data[i]['trial_type']=="familiarization") {
+	  var movie = {
+	    type: 'video-keyboard-response',
+		  sources: ["stimuli/movies/ag.mp4"],
+		  trial_duration: 1500,
+		  autoplay: true,
+		  width: 320,
+		  height: 180,
+	  }
+	  timeline.push(movie);
+  }
+}
+
+var end_trial = {
+  type: 'html-button-response',
+  stimulus: '<div style="max-width:600px;"><p>You have reached the end of the demo!</p><p>Click next to finish.</p></div>',
+  choices: ['next']
+}
+
+timeline.push(end_trial);
+
+var fullscreen_exit = {
+  type: 'fullscreen',
+  fullscreen_mode: false
+}
+timeline.push(fullscreen_exit);
+
+
+};
+
+
+
+
+var imageExt = 'stimuli/images/';
+
+
+var images = [
+"Fb2_2221.jpg",
+"Fb2_1111.jpg",
+"Fb1_2222.jpg",
+"Fb1_1111.jpg",
+"Fa2_1111.jpg",
+"Fa2_3333.jpg",
+"Fa1_1111.jpg",
+"Fa1_3333.jpg"
+]
+
+var preload_images=[];
+
+for (var k = 0; k < images.length; k++) {
+	preload_images.push(imageExt+images[k]);
+};
+
+function startExperiment(data) {
+	createTrials(data);
+jsPsych.init({
+  timeline: timeline,
+  preload_images:preload_images,
+	default_iti: 300,
+  on_finish: function() {
+    jsPsych.data.displayData();
+  }
+});
+};
+
+
+</script>
+
+</html>

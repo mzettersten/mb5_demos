@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>MB5 Demo1</title>
+  <meta charset="utf-8"/>
+  <script src="jspsych-6.1.0/jspsych.js"> </script>
+  <script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
+  <script src="jspsych-6.1.0/plugins/jspsych-image-keyboard-response.js"></script>
+  <script src="jspsych-6.1.0/plugins/jspsych-fullscreen.js"></script>
+  <script src="jspsych-6.1.0/plugins/jspsych-audio-button-response-flexiblelocations.js"></script>
+  <script src="jspsych-6.1.0/plugins/jspsych-video-keyboard-response.js"></script>
+  <script src="jspsych-6.1.0/plugins/jspsych-html-button-response.js"></script>
+  <script src="jspsych-6.1.0/plugins/jspsych-html-button-response-resize.js"></script>
+  <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script> -->
+  <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.1.0/papaparse.min.js"></script> -->
+  <link rel="stylesheet" href="jspsych-6.1.0/css/mb5.css",type="text/css"> </link>
+  <link rel="stylesheet" href="jspsych-6.1.0/css/jspsych.css",type="text/css"> </link>
+  <link href="css/jspsych.css" rel="stylesheet" type="text/css"></link>
+  <script src="js/example_trial_list_short.js"></script>
+</head>
+<body>
+  <div id="jspsych-lwl"></div>
+</body>
+
+<script>
+
+
+// $('body,html').addClass('stop-scrolling');
+//$('body').bind('touchmove', function(e){e.preventDefault()})
+
+
+//Enter subject id
+//var subject_id = prompt("Enter subject id", "test");
+var subject_id = "test";
+
+document.body.style.backgroundColor = "black";
+document.body.style.backgroundSize = "100%";
+document.body.style.backgroundPosition = "top";
+document.body.style.backgroundRepeat = "no-repeat";
+
+
+var timeline = [];
+	
+console.log(trial_list);
+
+var welcome = {
+    type: "fullscreen",
+    // fullscreen_mode: false,
+    message: "",
+    button_label: "Start",
+    delay_after: 250
+  }
+
+timeline.push(welcome);
+  
+  var pre_trial = {
+    type: 'html-button-response',
+    stimulus: '<div style="max-width:600px;"><p>This demo will show a series of trial examples for ManyBabies5.</p><p>Advance past the laughing baby attention getter by pressing any key. All other stimulus durations are fixed.</div>',
+    choices: ['continue']
+  }
+  
+  timeline.push(pre_trial);
+  
+
+  var expLength = trial_list.length
+  var imageStart='<img style="max-width:100%;" src= "stimuli/images/'
+  var imageStop= '"  title = "" width="380">'
+  
+  
+
+  for (var i = 0; i < expLength; i++) {
+  
+  var movie = {
+    type: 'video-keyboard-response',
+	  sources: ["stimuli/movies/laughing_baby.mp4"],
+	  trial_duration: 5000,
+	  width: 320,
+	  height: 180,
+	  autoplay: true,
+    response_ends_trial: true,
+  }
+  timeline.push(movie);
+  
+  var familiarization_trial = {
+    type: 'html-button-response-resize',
+    stimulus: imageStart+trial_list[i]['familiar_stimulus']+imageStop,
+	  choices:[],
+	trial_duration: trial_list[i]['familiarization_time'],
+	response_ends_trial: false,
+    data: jsPsych.timelineVariable('trial_list'),
+	  response_ends_trial: false,
+      data:{
+  		trial_phase: "familiarization"
+      }
+  }
+  
+
+  timeline.push(familiarization_trial);
+
+  var ag = {
+      type: 'video-keyboard-response',
+      sources: ["stimuli/movies/ag.mp4"],
+      trial_duration: 750,
+      autoplay: true,
+      width: 320,
+      height: 180,
+    }
+    timeline.push(ag);
+
+    if (trial_list[i]["familiar_location_1"]=="left") {
+      var left_image_1 = trial_list[i]['familiar_stimulus'];
+      var right_image_1 = trial_list[i]['novel_stimulus'];
+    } else {
+      var left_image_1 = trial_list[i]['novel_stimulus'];
+      var right_image_1 = trial_list[i]['familiar_stimulus'];
+    }
+	
+    var test_trial_1 = {
+      type: 'html-button-response-resize',
+      stimulus: "",
+  	choices:[imageStart+left_image_1+imageStop, imageStart+right_image_1+imageStop],
+  	trial_duration: trial_list[i]['test_time_1'],
+  	margin_left: ['0px','100 px'],
+  	  margin_right: ['200px','0px'],
+  	response_ends_trial: false,
+      data: jsPsych.timelineVariable('trial_list'),
+  	  response_ends_trial: false,
+        data:{
+    		trial_phase: "test_1",
+        }
+    }
+    timeline.push(test_trial_1);
+
+    var ag = {
+      type: 'video-keyboard-response',
+      sources: ["stimuli/movies/ag.mp4"],
+      trial_duration: 750,
+      autoplay: true,
+      width: 320,
+      height: 180,
+    }
+    timeline.push(ag);
+
+    if (trial_list[i]["familiar_location_2"]=="left") {
+      var left_image_2 = trial_list[i]['familiar_stimulus'];
+      var right_image_2 = trial_list[i]['novel_stimulus'];
+    } else {
+      var left_image_2 = trial_list[i]['novel_stimulus'];
+      var right_image_2 = trial_list[i]['familiar_stimulus'];
+    }
+
+    var test_trial_2 = {
+      type: 'html-button-response-resize',
+      stimulus: "",
+    choices:[imageStart+left_image_2+imageStop, imageStart+right_image_2+imageStop],
+    trial_duration: trial_list[i]['test_time_1'],
+    margin_left: ['0px','100 px'],
+      margin_right: ['200px','0px'],
+    response_ends_trial: false,
+      data: jsPsych.timelineVariable('trial_list'),
+      response_ends_trial: false,
+        data:{
+        trial_phase: "test_2",
+        }
+    }
+    timeline.push(test_trial_2);
+  
+  
+	  
+  }
+
+var end_trial = {
+  type: 'html-button-response',
+  stimulus: '<div style="max-width:600px;"><p>You have reached the end of the demo!</p><p>Click next to finish.</p></div>',
+  choices: ['next']
+}
+
+timeline.push(end_trial);
+
+var fullscreen_exit = {
+  type: 'fullscreen',
+  fullscreen_mode: false
+}
+timeline.push(fullscreen_exit);
+
+
+var imageExt = 'stimuli/images/';
+
+
+var images = [
+"Fb2_2221.jpg",
+"Fb2_1111.jpg",
+"Fb1_2222.jpg",
+"Fb1_1111.jpg",
+"Fa2_1111.jpg",
+"Fa2_3333.jpg",
+"Fa1_1111.jpg",
+"Fa1_3333.jpg",
+"fractal_complex_pair2_a.png",
+"fractal_complex_pair1_a.png",
+"fractal_complex_pair1_b.png",
+"fractal_complex_pair2_b.png",
+"fractal_complex_pair3_a.png",
+"fractal_complex_pair3_b.png",
+"fractal_complex_pair4_a.png",
+"fractal_complex_pair4_b.png",
+"fractal_complex_pair5_a.png",
+"fractal_complex_pair5_b.png",
+"fractal_complex_pair6_a.png",
+"fractal_complex_pair6_b.png",
+"fractal_simple_pair1_a.png",
+"fractal_simple_pair1_b.png",
+"fractal_simple_pair2_a.png",
+"fractal_simple_pair2_b.png",
+"fractal_simple_pair3_a.png",
+"fractal_simple_pair3_b.png",
+"fractal_simple_pair4_a.png",
+"fractal_simple_pair4_b.png",
+"fractal_simple_pair5_a.png",
+"fractal_simple_pair5_b.png",
+"fractal_simple_pair6_a.png",
+"fractal_simple_pair6_b.png"
+]
+
+var preload_images=[];
+
+for (var k = 0; k < images.length; k++) {
+	preload_images.push(imageExt+images[k]);
+};
+
+
+
+jsPsych.init({
+  timeline: timeline,
+  preload_images:preload_images,
+	default_iti: 300,
+  on_finish: function() {
+    //jsPsych.data.displayData();
+    // save_data('mb5_demo','V1',subject_id, jsPsych.data.dataAsCSV());
+  }
+});
+
+
+</script>
+
+</html>
